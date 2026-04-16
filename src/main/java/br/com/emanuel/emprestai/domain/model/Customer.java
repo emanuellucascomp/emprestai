@@ -15,6 +15,8 @@ public class Customer {
     private List<Loan> loans;
     private Long administratorId; // ID do administrador responsável
     private Boolean active;
+    private String resetToken; // Token para reset de senha
+    private Long resetTokenExpiration; // Data de expiração do token (timestamp)
 
     public Customer() {
         this.loans = new ArrayList<>();
@@ -120,5 +122,21 @@ public class Customer {
 
     public void setLoans(List<Loan> loans) {
         this.loans = loans;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public Long getResetTokenExpiration() {
+        return resetTokenExpiration;
+    }
+
+    public void setResetTokenExpiration(Long resetTokenExpiration) {
+        this.resetTokenExpiration = resetTokenExpiration;
     }
 }

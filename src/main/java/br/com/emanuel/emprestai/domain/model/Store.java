@@ -11,6 +11,8 @@ public class Store {
     private UserRole role;
     private Long administratorId;
     private Boolean active;
+    private String resetToken; // Token para reset de senha
+    private Long resetTokenExpiration; // Data de expiração do token (timestamp)
 
     public Store() {
         this.role = UserRole.STORE;
@@ -97,5 +99,21 @@ public class Store {
     }
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public Long getResetTokenExpiration() {
+        return resetTokenExpiration;
+    }
+
+    public void setResetTokenExpiration(Long resetTokenExpiration) {
+        this.resetTokenExpiration = resetTokenExpiration;
     }
 }

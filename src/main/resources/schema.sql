@@ -7,7 +7,9 @@ CREATE TABLE IF NOT EXISTS administrator (
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL,
-    active BOOLEAN DEFAULT TRUE
+    active BOOLEAN DEFAULT TRUE,
+    reset_token VARCHAR(500),
+    reset_token_expiration BIGINT
 );
 
 CREATE TABLE IF NOT EXISTS customer (
@@ -21,6 +23,8 @@ CREATE TABLE IF NOT EXISTS customer (
     role VARCHAR(50) NOT NULL,
     administrator_id BIGINT,
     active BOOLEAN DEFAULT TRUE,
+    reset_token VARCHAR(500),
+    reset_token_expiration BIGINT,
     FOREIGN KEY (administrator_id) REFERENCES administrator(id)
 );
 
@@ -35,6 +39,8 @@ CREATE TABLE IF NOT EXISTS store (
     role VARCHAR(50) NOT NULL,
     administrator_id BIGINT,
     active BOOLEAN DEFAULT TRUE,
+    reset_token VARCHAR(500),
+    reset_token_expiration BIGINT,
     FOREIGN KEY (administrator_id) REFERENCES administrator(id)
 );
 

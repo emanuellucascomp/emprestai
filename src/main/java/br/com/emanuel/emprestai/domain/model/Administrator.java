@@ -15,6 +15,8 @@ public class Administrator {
     private List<Customer> customers;
     private List<Store> stores;
     private Boolean active;
+    private String resetToken; // Token para reset de senha
+    private Long resetTokenExpiration; // Data de expiração do token (timestamp)
 
     public Administrator() {
         this.customers = new ArrayList<>();
@@ -126,5 +128,20 @@ public class Administrator {
     public void setActive(Boolean active) {
         this.active = active;
     }
-}
 
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public Long getResetTokenExpiration() {
+        return resetTokenExpiration;
+    }
+
+    public void setResetTokenExpiration(Long resetTokenExpiration) {
+        this.resetTokenExpiration = resetTokenExpiration;
+    }
+}
