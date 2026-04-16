@@ -1,0 +1,8 @@
+package br.com.emanuel.emprestai.application.usecases;
+
+import br.com.emanuel.emprestai.adapter.inbound.web.dtos.CustomerResponse;
+import java.util.List;
+
+public interface ListCustomersUseCase {
+    List<CustomerResponse> list();
+}
