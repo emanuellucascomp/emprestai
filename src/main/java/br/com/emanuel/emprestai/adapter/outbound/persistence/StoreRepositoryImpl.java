@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.outbound.persistence;
+package br.com.emanuel.emprestai.adapter.outbound.persistence;
 
 import org.springframework.stereotype.Component;
 import br.com.emanuel.emprestai.domain.ports.outbound.StoreRepository;

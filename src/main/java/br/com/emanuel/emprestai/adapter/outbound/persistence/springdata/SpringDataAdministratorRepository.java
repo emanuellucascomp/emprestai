@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.outbound.persistence.springdata;
+package br.com.emanuel.emprestai.adapter.outbound.persistence.springdata;
 
 import br.com.emanuel.emprestai.adapter.outbound.persistence.entity.AdministratorEntity;
 import org.springframework.data.repository.CrudRepository;

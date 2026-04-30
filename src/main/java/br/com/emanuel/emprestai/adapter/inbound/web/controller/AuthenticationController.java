@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.inbound.web.controller;
+package br.com.emanuel.emprestai.adapter.inbound.web.controller;
 
 import br.com.emanuel.emprestai.adapter.inbound.web.dtos.LoginRequest;
 import br.com.emanuel.emprestai.adapter.inbound.web.dtos.LoginResponse;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthenticationController {
     private final LoginUseCase loginUseCase;
     private final RegisterAdministratorUseCase registerAdministratorUseCase;
 
-    public AuthController(LoginUseCase loginUseCase, RegisterAdministratorUseCase registerAdministratorUseCase) {
+    public AuthenticationController(LoginUseCase loginUseCase, RegisterAdministratorUseCase registerAdministratorUseCase) {
         this.loginUseCase = loginUseCase;
         this.registerAdministratorUseCase = registerAdministratorUseCase;
     }

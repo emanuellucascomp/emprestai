@@ -31,7 +31,6 @@ public class CustomerEntity {
 
     private Boolean active;
 
-    // ...existing code...
     public String getEmail() {
         return email;
     }

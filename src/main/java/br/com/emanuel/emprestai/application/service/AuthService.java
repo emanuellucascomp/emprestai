@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.application.service;
+package br.com.emanuel.emprestai.application.service;
 
 import br.com.emanuel.emprestai.adapter.inbound.web.dtos.LoginRequest;
 import br.com.emanuel.emprestai.adapter.inbound.web.dtos.LoginResponse;

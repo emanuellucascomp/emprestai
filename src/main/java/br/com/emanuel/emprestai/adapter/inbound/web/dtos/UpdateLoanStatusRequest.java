@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.inbound.web.dtos;
+package br.com.emanuel.emprestai.adapter.inbound.web.dtos;
 
 public class UpdateLoanStatusRequest {
     private String loanStatus;

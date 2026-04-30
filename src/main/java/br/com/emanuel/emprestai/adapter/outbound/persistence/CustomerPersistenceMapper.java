@@ -6,21 +6,30 @@ import br.com.emanuel.emprestai.domain.model.Customer;
 import br.com.emanuel.emprestai.adapter.outbound.persistence.entity.CustomerEntity;
 import br.com.emanuel.emprestai.domain.model.Loan;
 import br.com.emanuel.emprestai.domain.model.Installment;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+@Component
 public class CustomerPersistenceMapper {
+
+    public CustomerPersistenceMapper() {
+    }
     public Customer toDomain(CustomerEntity entity) {
         if (entity == null) return null;
 
-        Customer customer = new Customer(
-                entity.getId(),
-                entity.getName(),
-                entity.getCpf(),
-                entity.getAddress(),
-                entity.getPhone()
-        );
+        Customer customer = new Customer();
+        customer.setId(entity.getId());
+        customer.setName(entity.getName());
+        customer.setCpf(entity.getCpf());
+        customer.setAddress(entity.getAddress());
+        customer.setPhone(entity.getPhone());
+        customer.setEmail(entity.getEmail());
+        customer.setPassword(entity.getPassword());
+        customer.setRole(entity.getRole());
+        customer.setAdministratorId(entity.getAdministrator().getId());
+        customer.setActive(entity.getActive());
 
         // Mapear os empréstimos
         if (entity.getLoans() != null && !entity.getLoans().isEmpty()) {
@@ -63,14 +72,13 @@ public class CustomerPersistenceMapper {
     private Loan loanEntityToDomain(LoanEntity entity) {
         if (entity == null) return null;
 
-        Loan loan = new Loan(
-                entity.getId(),
-                entity.getCustomer().getId(),
-                entity.getAmount(),
-                entity.getStartDate(),
-                entity.getLoanStatus(),
-                new ArrayList<>()
-        );
+        Loan loan = new Loan();
+        loan.setId(entity.getId());
+        loan.setCustomerId(entity.getCustomer().getId());
+        loan.setAmount(entity.getAmount());
+        loan.setStartDate(entity.getStartDate());
+        loan.setLoanStatus(entity.getLoanStatus());
+        loan.setInstallments(new ArrayList<>());
 
         // Mapear installments
         if (entity.getInstallments() != null && !entity.getInstallments().isEmpty()) {
@@ -109,13 +117,15 @@ public class CustomerPersistenceMapper {
     private Installment installmentEntityToDomain(InstallmentEntity entity) {
         if (entity == null) return null;
 
-        return new Installment(
-            entity.getId(),
-            entity.getNumber(),
-            entity.getAmount(),
-            entity.getDueDate(),
-            entity.getInstallmentStatus()
-        );
+        Installment installment = new Installment();
+        installment.setId(entity.getId());
+        installment.setLoanId(entity.getLoan().getId());
+        installment.setNumber(entity.getNumber());
+        installment.setAmount(entity.getAmount());
+        installment.setDueDate(entity.getDueDate());
+        installment.setInstallmentStatus(entity.getInstallmentStatus());
+
+        return installment;
     }
 
     private InstallmentEntity installmentDomainToEntity(Installment domain, LoanEntity loan) {

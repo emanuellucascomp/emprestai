@@ -1,0 +1,661 @@
+﻿{
+  "info": {
+    "name": "Emprestai API",
+    "description": "Collection completa de endpoints da aplicação Emprestai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('userId', jsonData.userId);",
+                  "    pm.environment.set('userRole', jsonData.role);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"12345678901\",\n  \"password\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Realiza login no sistema com CPF/CNPJ e senha"
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"document\": \"12345678901\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/forgot-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "forgot-password"]
+            },
+            "description": "Solicita um token de reset de senha. Válido por 1 hora."
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"token-recebido-aqui\",\n  \"newPassword\": \"novaSenha123\",\n  \"confirmPassword\": \"novaSenha123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/reset-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "reset-password"]
+            },
+            "description": "Reseta a senha usando o token recebido em 'Forgot Password'"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customer",
+      "item": [
+        {
+          "name": "Create Customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('customerId', jsonData.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva\",\n  \"cpf\": \"12345678901\",\n  \"address\": \"Rua A, 123\",\n  \"phone\": \"11999999999\",\n  \"email\": \"joao@example.com\",\n  \"password\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"]
+            },
+            "description": "Cria um novo cliente"
+          },
+          "response": []
+        },
+        {
+          "name": "List All Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"]
+            },
+            "description": "Lista todos os clientes do sistema"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            },
+            "description": "Obtém as informações de um cliente específico"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva Atualizado\",\n  \"cpf\": \"12345678901\",\n  \"address\": \"Rua B, 456\",\n  \"phone\": \"11988888888\",\n  \"email\": \"joao.novo@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            },
+            "description": "Atualiza as informações de um cliente"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva\",\n  \"address\": \"Rua C, 789\",\n  \"phone\": \"11987654321\",\n  \"email\": \"joao@example.com\",\n  \"currentPassword\": \"senhaAtual123\",\n  \"newPassword\": \"novaSenha456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}", "profile"]
+            },
+            "description": "Permite que o cliente edite seu perfil e mude sua senha"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            },
+            "description": "Deleta um cliente"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Store",
+      "item": [
+        {
+          "name": "Create Store",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('storeId', jsonData.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Loja XYZ\",\n  \"cnpj\": \"12345678000195\",\n  \"address\": \"Rua Comercial, 100\",\n  \"phone\": \"11988887777\",\n  \"email\": \"loja@example.com\",\n  \"password\": \"senhaLoja123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/stores",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stores"]
+            },
+            "description": "Cria uma nova loja"
+          },
+          "response": []
+        },
+        {
+          "name": "List All Stores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stores",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stores"]
+            },
+            "description": "Lista todas as lojas do sistema"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Store by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stores/{{storeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stores", "{{storeId}}"]
+            },
+            "description": "Obtém as informações de uma loja específica"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Store",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Loja XYZ Atualizada\",\n  \"cnpj\": \"12345678000195\",\n  \"address\": \"Rua Comercial, 200\",\n  \"phone\": \"11988886666\",\n  \"email\": \"loja.novo@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/stores/{{storeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stores", "{{storeId}}"]
+            },
+            "description": "Atualiza as informações de uma loja"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Store Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Loja XYZ\",\n  \"address\": \"Rua Comercial, 300\",\n  \"phone\": \"11988885555\",\n  \"email\": \"loja@example.com\",\n  \"currentPassword\": \"senhaAtual123\",\n  \"newPassword\": \"novaSenha456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/stores/{{storeId}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stores", "{{storeId}}", "profile"]
+            },
+            "description": "Permite que a loja edite seu perfil e mude sua senha"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Store",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stores/{{storeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stores", "{{storeId}}"]
+            },
+            "description": "Deleta uma loja"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Administrator",
+      "item": [
+        {
+          "name": "Register Administrator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('adminId', jsonData.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Administrador Master\",\n  \"cpf\": \"98765432100\",\n  \"address\": \"Rua Admin, 50\",\n  \"phone\": \"11988884444\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"senhaAdmin123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/administrators/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "administrators", "register"]
+            },
+            "description": "Registra um novo administrador"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Administrator by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/administrators/{{adminId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "administrators", "{{adminId}}"]
+            },
+            "description": "Obtém as informações de um administrador"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Administrator Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Administrador Master\",\n  \"address\": \"Rua Admin, 100\",\n  \"phone\": \"11988883333\",\n  \"email\": \"admin@example.com\",\n  \"currentPassword\": \"senhaAtual123\",\n  \"newPassword\": \"novaSenha456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/administrators/{{adminId}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "administrators", "{{adminId}}", "profile"]
+            },
+            "description": "Permite que o administrador edite seu perfil e mude sua senha"
+          },
+          "response": []
+        },
+        {
+          "name": "List Administrator's Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/administrators/{{adminId}}/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "administrators", "{{adminId}}", "customers"]
+            },
+            "description": "Lista todos os clientes que estão sob responsabilidade do administrador"
+          },
+          "response": []
+        },
+        {
+          "name": "List Administrator's Stores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/administrators/{{adminId}}/stores",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "administrators", "{{adminId}}", "stores"]
+            },
+            "description": "Lista todas as lojas que estão sob responsabilidade do administrador"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Loan",
+      "item": [
+        {
+          "name": "Create Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set('loanId', jsonData.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"amount\": 5000.00,\n  \"startDate\": \"2026-04-16\",\n  \"numberOfInstallments\": 12,\n  \"installmentAmount\": 416.67\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans"]
+            },
+            "description": "Cria um novo empréstimo com suas parcelas"
+          },
+          "response": []
+        },
+        {
+          "name": "List All Loans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/loans",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans"]
+            },
+            "description": "Lista todos os empréstimos do sistema"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Loan by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}"]
+            },
+            "description": "Obtém as informações de um empréstimo específico com suas parcelas"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Loan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"amount\": 5500.00,\n  \"startDate\": \"2026-04-16\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}"]
+            },
+            "description": "Atualiza as informações de um empréstimo"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Loan Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanStatus\": \"ACTIVE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/loans/{{loanId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "loans", "{{loanId}}", "status"]
+            },
+            "description": "Atualiza o status de um empréstimo (PENDING, ACTIVE, COMPLETED, CANCELLED)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Installment",
+      "item": [
+        {
+          "name": "Update Installment Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"installmentStatus\": \"PAID\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/installments/{{installmentId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "installments", "{{installmentId}}", "status"]
+            },
+            "description": "Atualiza o status de pagamento de uma parcela (PENDING, PAID, OVERDUE, CANCELLED)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Installment by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/installments/{{installmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "installments", "{{installmentId}}"]
+            },
+            "description": "Obtém as informações de uma parcela específica"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "customerId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "storeId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "adminId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "loanId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "installmentId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userRole",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
+

@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.inbound.web.dtos;
+package br.com.emanuel.emprestai.adapter.inbound.web.dtos;
 
 public class ForgotPasswordResponse {
     private String message;

@@ -1,10 +1,11 @@
-﻿package br.com.emanuel.emprestai.domain.model;
+package br.com.emanuel.emprestai.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Installment {
     private Long id;
+    private Long loanId;
     private Integer number;
     private BigDecimal amount;
     private LocalDate dueDate;
@@ -13,8 +14,9 @@ public class Installment {
     public Installment() {
     }
 
-    public Installment(Long id, Integer number, BigDecimal amount, LocalDate dueDate, InstallmentStatus installmentStatus) {
+    public Installment(Long id, Long loanId, Integer number, BigDecimal amount, LocalDate dueDate, InstallmentStatus installmentStatus) {
         this.id = id;
+        this.loanId = loanId;
         this.number = number;
         this.amount = amount;
         this.dueDate = dueDate;
@@ -27,6 +29,14 @@ public class Installment {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(Long loanId) {
+        this.loanId = loanId;
     }
 
     public Integer getNumber() {

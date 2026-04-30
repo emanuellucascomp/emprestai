@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.inbound.web.dtos;
+package br.com.emanuel.emprestai.adapter.inbound.web.dtos;
 
 import br.com.emanuel.emprestai.domain.model.UserRole;
 

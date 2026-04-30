@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.domain.model;
+package br.com.emanuel.emprestai.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;

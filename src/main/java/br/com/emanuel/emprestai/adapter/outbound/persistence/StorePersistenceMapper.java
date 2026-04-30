@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.outbound.persistence;
+package br.com.emanuel.emprestai.adapter.outbound.persistence;
 
 import br.com.emanuel.emprestai.adapter.outbound.persistence.entity.StoreEntity;
 import br.com.emanuel.emprestai.domain.model.Store;

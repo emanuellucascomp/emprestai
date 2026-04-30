@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.domain.model;
+package br.com.emanuel.emprestai.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.inbound.mapper;
+package br.com.emanuel.emprestai.adapter.inbound.mapper;
 
 import br.com.emanuel.emprestai.adapter.inbound.web.dtos.LoanRequest;
 import br.com.emanuel.emprestai.adapter.inbound.web.dtos.LoanResponse;
@@ -60,6 +60,7 @@ public class LoanMapper {
     private Installment installmentRequestToDomain(InstallmentRequest request) {
         if (request == null) return null;
         return new Installment(
+            null,
             null,
             request.getNumber(),
             request.getAmount(),

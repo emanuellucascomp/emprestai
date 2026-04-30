@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.application.service;
+package br.com.emanuel.emprestai.application.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

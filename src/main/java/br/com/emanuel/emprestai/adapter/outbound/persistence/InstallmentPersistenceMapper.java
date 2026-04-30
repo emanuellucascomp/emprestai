@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.outbound.persistence;
+package br.com.emanuel.emprestai.adapter.outbound.persistence;
 
 import br.com.emanuel.emprestai.adapter.outbound.persistence.entity.InstallmentEntity;
 import br.com.emanuel.emprestai.adapter.outbound.persistence.entity.LoanEntity;
@@ -13,6 +13,7 @@ public class InstallmentPersistenceMapper {
 
         return new Installment(
             entity.getId(),
+            entity.getLoan().getId(),
             entity.getNumber(),
             entity.getAmount(),
             entity.getDueDate(),

@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.inbound.web.dtos;
+package br.com.emanuel.emprestai.adapter.inbound.web.dtos;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.outbound.persistence;
+package br.com.emanuel.emprestai.adapter.outbound.persistence;
 
 import br.com.emanuel.emprestai.adapter.outbound.persistence.entity.AdministratorEntity;
 import br.com.emanuel.emprestai.domain.model.Administrator;

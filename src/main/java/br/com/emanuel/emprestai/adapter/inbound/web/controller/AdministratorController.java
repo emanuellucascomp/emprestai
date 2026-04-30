@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.inbound.web.controller;
+package br.com.emanuel.emprestai.adapter.inbound.web.controller;
 
 import br.com.emanuel.emprestai.adapter.inbound.web.dtos.CustomerResponse;
 import br.com.emanuel.emprestai.adapter.inbound.web.dtos.StoreResponse;

@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.domain.ports.outbound;
+package br.com.emanuel.emprestai.domain.ports.outbound;
 
 import br.com.emanuel.emprestai.domain.model.Store;
 

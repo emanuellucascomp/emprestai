@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <!-- 001: Create Administrator Table -->
+    <changeSet id="001_create_administrator_table" author="development">
+        <createTable tableName="administrator">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cpf" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="address" type="VARCHAR(500)"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="reset_token" type="VARCHAR(500)"/>
+            <column name="reset_token_expiration" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <!-- 002: Create Customer Table -->
+    <changeSet id="002_create_customer_table" author="development">
+        <createTable tableName="customer">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cpf" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="address" type="VARCHAR(500)"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="administrator_id" type="BIGINT"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="reset_token" type="VARCHAR(500)"/>
+            <column name="reset_token_expiration" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="customer" baseColumnNames="administrator_id"
+                                 referencedTableName="administrator" referencedColumnNames="id"
+                                 constraintName="fk_customer_administrator"/>
+    </changeSet>
+
+    <!-- 003: Create Store Table -->
+    <changeSet id="003_create_store_table" author="development">
+        <createTable tableName="store">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cnpj" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="address" type="VARCHAR(500)"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="administrator_id" type="BIGINT"/>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="reset_token" type="VARCHAR(500)"/>
+            <column name="reset_token_expiration" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="store" baseColumnNames="administrator_id"
+                                 referencedTableName="administrator" referencedColumnNames="id"
+                                 constraintName="fk_store_administrator"/>
+    </changeSet>
+
+    <!-- 004: Create Loan Table -->
+    <changeSet id="004_create_loan_table" author="development">
+        <createTable tableName="loan">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="loan_status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="loan" baseColumnNames="customer_id"
+                                 referencedTableName="customer" referencedColumnNames="id"
+                                 constraintName="fk_loan_customer" onDelete="CASCADE"/>
+    </changeSet>
+
+    <!-- 005: Create Installment Table -->
+    <changeSet id="005_create_installment_table" author="development">
+        <createTable tableName="installment">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="loan_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="number" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="due_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="installment_status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="installment" baseColumnNames="loan_id"
+                                 referencedTableName="loan" referencedColumnNames="id"
+                                 constraintName="fk_installment_loan" onDelete="CASCADE"/>
+    </changeSet>
+
+    <!-- 006: Insert Test Data -->
+    <changeSet id="006_insert_test_data" author="development">
+        <!-- Administrator -->
+        <insert tableName="administrator">
+            <column name="id" value="1"/>
+            <column name="name" value="Admin Padrão"/>
+            <column name="cpf" value="98765432100"/>
+            <column name="address" value="Rua Administrativa, 100"/>
+            <column name="phone" value="11987654321"/>
+            <column name="email" value="admin@test.com"/>
+            <column name="password" value="$2a$12$aCVPNw.3TAM.FT4BH2f84.rDtCaIutohadnLBMmjYm1mvn2NkyjSC"/>
+            <column name="role" value="ADMINISTRATOR"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+
+        <!-- Customers -->
+        <insert tableName="customer">
+            <column name="id" value="1"/>
+            <column name="name" value="Cliente Teste"/>
+            <column name="cpf" value="12345678901"/>
+            <column name="address" value="Rua A, 123"/>
+            <column name="phone" value="11999999999"/>
+            <column name="email" value="cliente@test.com"/>
+            <column name="password" value="$2a$12$aCVPNw.3TAM.FT4BH2f84.rDtCaIutohadnLBMmjYm1mvn2NkyjSC"/>
+            <column name="role" value="CUSTOMER"/>
+            <column name="administrator_id" value="1"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="customer">
+            <column name="id" value="2"/>
+            <column name="name" value="Cliente 2 Teste"/>
+            <column name="cpf" value="10987654321"/>
+            <column name="address" value="Rua B, 456"/>
+            <column name="phone" value="11988888888"/>
+            <column name="email" value="cliente2@test.com"/>
+            <column name="password" value="$2a$12$aCVPNw.3TAM.FT4BH2f84.rDtCaIutohadnLBMmjYm1mvn2NkyjSC"/>
+            <column name="role" value="CUSTOMER"/>
+            <column name="administrator_id" value="1"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+
+        <!-- Stores -->
+        <insert tableName="store">
+            <column name="id" value="1"/>
+            <column name="name" value="Loja Teste"/>
+            <column name="cnpj" value="12345678000195"/>
+            <column name="address" value="Rua Comercial, 100"/>
+            <column name="phone" value="11988887777"/>
+            <column name="email" value="loja@test.com"/>
+            <column name="password" value="$2a$12$aCVPNw.3TAM.FT4BH2f84.rDtCaIutohadnLBMmjYm1mvn2NkyjSC"/>
+            <column name="role" value="STORE"/>
+            <column name="administrator_id" value="1"/>
+            <column name="active" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

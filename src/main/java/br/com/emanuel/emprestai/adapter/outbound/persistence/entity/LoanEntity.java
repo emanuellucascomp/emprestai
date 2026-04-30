@@ -1,4 +1,4 @@
-﻿package br.com.emanuel.emprestai.adapter.outbound.persistence.entity;
+package br.com.emanuel.emprestai.adapter.outbound.persistence.entity;
 
 import jakarta.persistence.*;
 import br.com.emanuel.emprestai.domain.model.LoanStatus;
